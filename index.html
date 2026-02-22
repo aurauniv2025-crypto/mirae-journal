@@ -33,7 +33,6 @@
       overflow-x: hidden;
     }
 
-    /* Stars background */
     .stars {
       position: fixed; inset: 0; z-index: 0; pointer-events: none;
       background: radial-gradient(ellipse at 20% 50%, rgba(79,70,229,0.08) 0%, transparent 60%),
@@ -55,420 +54,163 @@
         radial-gradient(1px 1px at 35% 25%, rgba(200,180,255,0.4) 0%, transparent 100%);
     }
 
-    /* App layout */
     #app { position: relative; z-index: 1; min-height: 100vh; padding-bottom: 80px; }
 
-    /* Header */
-    .header {
-      text-align: center;
-      padding: 40px 20px 24px;
-    }
+    .header { text-align: center; padding: 40px 20px 24px; }
     .logo {
       font-family: 'Noto Serif KR', serif;
-      font-size: 28px;
-      font-weight: 700;
+      font-size: 28px; font-weight: 700;
       background: linear-gradient(135deg, var(--soft-lavender), var(--lavender), var(--purple));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
       letter-spacing: -0.5px;
     }
-    .logo-sub {
-      font-size: 12px;
-      color: var(--text3);
-      margin-top: 4px;
-      letter-spacing: 0.5px;
-    }
+    .logo-sub { font-size: 12px; color: var(--text3); margin-top: 4px; letter-spacing: 0.5px; }
     .streak-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(124,58,237,0.2);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 6px 14px;
-      font-size: 13px;
-      color: var(--lavender);
-      margin-top: 12px;
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(124,58,237,0.2); border: 1px solid var(--border);
+      border-radius: 20px; padding: 6px 14px; font-size: 13px; color: var(--lavender); margin-top: 12px;
     }
 
-    /* Nav tabs */
     .nav {
-      display: flex;
-      background: var(--card);
-      border-top: 1px solid var(--border);
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      z-index: 100;
+      display: flex; background: var(--card); border-top: 1px solid var(--border);
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
     }
     .nav-btn {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-      padding: 10px 4px;
-      background: none;
-      border: none;
-      color: var(--text3);
-      font-size: 10px;
-      font-family: 'Noto Sans KR', sans-serif;
-      cursor: pointer;
-      transition: color 0.2s;
+      flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+      padding: 10px 4px; background: none; border: none; color: var(--text3);
+      font-size: 10px; font-family: 'Noto Sans KR', sans-serif; cursor: pointer; transition: color 0.2s;
     }
     .nav-btn.active { color: var(--lavender); }
     .nav-btn svg { width: 22px; height: 22px; }
 
-    /* Pages */
     .page { display: none; padding: 0 16px; }
     .page.active { display: block; }
 
-    /* Today page */
-    .date-label {
-      text-align: center;
-      color: var(--text3);
-      font-size: 13px;
-      margin-bottom: 20px;
-    }
-    .greeting {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 20px;
-      font-weight: 600;
-      text-align: center;
-      color: var(--text);
-      margin-bottom: 6px;
-    }
-    .greeting-sub {
-      font-size: 13px;
-      color: var(--text3);
-      text-align: center;
-      margin-bottom: 28px;
-    }
+    .date-label { text-align: center; color: var(--text3); font-size: 13px; margin-bottom: 20px; }
+    .greeting { font-family: 'Noto Serif KR', serif; font-size: 20px; font-weight: 600; text-align: center; color: var(--text); margin-bottom: 6px; }
+    .greeting-sub { font-size: 13px; color: var(--text3); text-align: center; margin-bottom: 28px; }
 
-    /* Question cards */
     .question-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 16px;
-      transition: border-color 0.2s;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 20px; margin-bottom: 16px; transition: border-color 0.2s;
     }
     .question-card.answered { border-color: rgba(167,139,250,0.4); }
-    .q-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
-    }
+    .q-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .q-emoji { font-size: 22px; }
     .q-meta { flex: 1; }
     .q-category { font-size: 11px; color: var(--text3); margin-bottom: 2px; }
-    .q-text {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 15px;
-      color: var(--text);
-      line-height: 1.6;
-    }
+    .q-text { font-family: 'Noto Serif KR', serif; font-size: 15px; color: var(--text); line-height: 1.6; }
     .q-check {
-      width: 22px; height: 22px;
-      border-radius: 50%;
-      background: rgba(52,211,153,0.15);
-      border: 1px solid var(--success);
+      width: 22px; height: 22px; border-radius: 50%;
+      background: rgba(52,211,153,0.15); border: 1px solid var(--success);
       display: flex; align-items: center; justify-content: center;
-      opacity: 0;
-      transition: opacity 0.3s;
-      flex-shrink: 0;
+      opacity: 0; transition: opacity 0.3s; flex-shrink: 0;
     }
     .q-check.visible { opacity: 1; }
     .q-check svg { width: 13px; height: 13px; color: var(--success); }
 
     textarea {
-      width: 100%;
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: var(--text);
-      font-family: 'Noto Sans KR', sans-serif;
-      font-size: 14px;
-      line-height: 1.7;
-      padding: 12px;
-      resize: none;
-      min-height: 90px;
-      outline: none;
-      transition: border-color 0.2s;
+      width: 100%; background: var(--bg3); border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text); font-family: 'Noto Sans KR', sans-serif;
+      font-size: 14px; line-height: 1.7; padding: 12px; resize: none;
+      min-height: 90px; outline: none; transition: border-color 0.2s;
     }
     textarea:focus { border-color: var(--lavender); }
     textarea::placeholder { color: var(--text3); }
 
     .mic-btn {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--text3);
-      font-size: 12px;
-      font-family: 'Noto Sans KR', sans-serif;
-      padding: 6px 12px;
-      margin-top: 8px;
-      cursor: pointer;
-      transition: all 0.2s;
+      display: flex; align-items: center; gap: 6px; background: none;
+      border: 1px solid var(--border); border-radius: 8px; color: var(--text3);
+      font-size: 12px; font-family: 'Noto Sans KR', sans-serif;
+      padding: 6px 12px; margin-top: 8px; cursor: pointer; transition: all 0.2s;
     }
     .mic-btn:hover { color: var(--lavender); border-color: var(--lavender); }
     .mic-btn.recording { color: #F87171; border-color: #F87171; animation: pulse 1s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
 
     .save-btn {
-      width: 100%;
-      background: linear-gradient(135deg, var(--purple), var(--indigo));
-      border: none;
-      border-radius: 14px;
-      color: white;
-      font-family: 'Noto Sans KR', sans-serif;
-      font-size: 16px;
-      font-weight: 600;
-      padding: 16px;
-      margin-top: 8px;
-      cursor: pointer;
-      transition: opacity 0.2s, transform 0.1s;
+      width: 100%; background: linear-gradient(135deg, var(--purple), var(--indigo));
+      border: none; border-radius: 14px; color: white; font-family: 'Noto Sans KR', sans-serif;
+      font-size: 16px; font-weight: 600; padding: 16px; margin-top: 8px;
+      cursor: pointer; transition: opacity 0.2s, transform 0.1s;
     }
     .save-btn:hover { opacity: 0.9; }
     .save-btn:active { transform: scale(0.98); }
 
-    /* Progress */
-    .progress-bar {
-      background: var(--bg3);
-      border-radius: 4px;
-      height: 4px;
-      margin: 0 0 24px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      border-radius: 4px;
-      background: linear-gradient(90deg, var(--purple), var(--lavender));
-      transition: width 0.4s ease;
-    }
+    .progress-bar { background: var(--bg3); border-radius: 4px; height: 4px; margin: 0 0 24px; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--purple), var(--lavender)); transition: width 0.4s ease; }
 
-    /* Insight page */
-    .section-title {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 16px;
-    }
+    .section-title { font-family: 'Noto Serif KR', serif; font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 16px; }
 
-    .insight-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 16px;
-    }
-    .insight-card h3 {
-      font-size: 14px;
-      color: var(--text2);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .insight-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+    .insight-card h3 { font-size: 14px; color: var(--text2); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
 
-    /* Emotion calendar */
-    .cal-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 4px;
-    }
-    .cal-day {
-      aspect-ratio: 1;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      color: var(--text3);
-    }
-    .cal-day.has-entry {
-      background: linear-gradient(135deg, var(--purple), var(--indigo));
-      color: white;
-      font-size: 14px;
-    }
-    .cal-day.today {
-      border: 1px solid var(--lavender);
-    }
+    .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+    .cal-day { aspect-ratio: 1; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--text3); }
+    .cal-day.has-entry { background: linear-gradient(135deg, var(--purple), var(--indigo)); color: white; font-size: 14px; }
+    .cal-day.today { border: 1px solid var(--lavender); }
 
-    /* Stats */
-    .stats-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .stat-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px;
-      text-align: center;
-    }
+    .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; text-align: center; }
     .stat-num {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 32px;
-      font-weight: 700;
+      font-family: 'Noto Serif KR', serif; font-size: 32px; font-weight: 700;
       background: linear-gradient(135deg, var(--soft-lavender), var(--lavender));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
     .stat-label { font-size: 12px; color: var(--text3); margin-top: 4px; }
 
-    /* Index gauge */
     .gauge-wrap { text-align: center; padding: 8px 0; }
     .gauge-num {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 48px;
-      font-weight: 700;
+      font-family: 'Noto Serif KR', serif; font-size: 48px; font-weight: 700;
       background: linear-gradient(135deg, var(--soft-lavender), var(--lavender), var(--purple));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
     .gauge-label { font-size: 13px; color: var(--text3); margin-top: 4px; }
-    .gauge-bar {
-      height: 8px;
-      background: var(--bg3);
-      border-radius: 4px;
-      margin: 12px 0 6px;
-      overflow: hidden;
-    }
-    .gauge-fill {
-      height: 100%;
-      border-radius: 4px;
-      background: linear-gradient(90deg, var(--indigo), var(--purple), var(--lavender));
-    }
+    .gauge-bar { height: 8px; background: var(--bg3); border-radius: 4px; margin: 12px 0 6px; overflow: hidden; }
+    .gauge-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--indigo), var(--purple), var(--lavender)); }
 
-    /* History page */
-    .history-item {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 12px;
-    }
+    .history-item { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin-bottom: 12px; }
     .history-date { font-size: 12px; color: var(--text3); margin-bottom: 10px; }
     .history-q { font-size: 12px; color: var(--lavender); margin-bottom: 4px; }
     .history-a { font-size: 14px; color: var(--text); line-height: 1.6; }
-    .history-preview {
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
+    .history-preview { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
-    /* AI page */
-    .ai-chat {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 16px;
-      min-height: 200px;
-    }
-    .ai-msg {
-      background: var(--bg3);
-      border-radius: 12px 12px 12px 4px;
-      padding: 14px;
-      font-size: 14px;
-      line-height: 1.7;
-      color: var(--text2);
-      margin-bottom: 12px;
-    }
-    .ai-msg-label {
-      font-size: 11px;
-      color: var(--text3);
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .ai-input-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 12px;
-    }
-    .ai-input {
-      flex: 1;
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      color: var(--text);
-      font-family: 'Noto Sans KR', sans-serif;
-      font-size: 14px;
-      padding: 10px 14px;
-      outline: none;
-    }
+    .ai-chat { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 16px; min-height: 200px; }
+    .ai-msg { background: var(--bg3); border-radius: 12px 12px 12px 4px; padding: 14px; font-size: 14px; line-height: 1.7; color: var(--text2); margin-bottom: 12px; }
+    .ai-msg-label { font-size: 11px; color: var(--text3); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+    .user-msg { background: rgba(124,58,237,0.2); border-radius: 12px 12px 4px 12px; padding: 14px; font-size: 14px; line-height: 1.7; color: var(--text); margin-bottom: 12px; text-align: right; }
+    .ai-input-row { display: flex; gap: 8px; margin-top: 12px; }
+    .ai-input { flex: 1; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: 'Noto Sans KR', sans-serif; font-size: 14px; padding: 10px 14px; outline: none; }
     .ai-input:focus { border-color: var(--lavender); }
-    .ai-send {
-      background: linear-gradient(135deg, var(--purple), var(--indigo));
-      border: none;
-      border-radius: 10px;
-      color: white;
-      font-size: 18px;
-      width: 44px;
-      cursor: pointer;
-    }
+    .ai-send { background: linear-gradient(135deg, var(--purple), var(--indigo)); border: none; border-radius: 10px; color: white; font-size: 18px; width: 44px; cursor: pointer; }
 
-    /* Toast */
     .toast {
-      position: fixed;
-      bottom: 90px;
-      left: 50%;
+      position: fixed; bottom: 90px; left: 50%;
       transform: translateX(-50%) translateY(20px);
-      background: var(--card2);
-      border: 1px solid var(--lavender);
-      border-radius: 12px;
-      padding: 12px 20px;
-      font-size: 14px;
-      color: var(--lavender);
-      opacity: 0;
-      transition: all 0.3s;
-      z-index: 200;
-      white-space: nowrap;
+      background: var(--card2); border: 1px solid var(--lavender);
+      border-radius: 12px; padding: 12px 20px; font-size: 14px; color: var(--lavender);
+      opacity: 0; transition: all 0.3s; z-index: 200; white-space: nowrap;
     }
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    /* Completion banner */
     .completion-banner {
       background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(79,70,229,0.3));
-      border: 1px solid var(--lavender);
-      border-radius: 16px;
-      padding: 20px;
-      text-align: center;
-      margin-bottom: 20px;
-      display: none;
+      border: 1px solid var(--lavender); border-radius: 16px; padding: 20px;
+      text-align: center; margin-bottom: 20px; display: none;
     }
     .completion-banner.show { display: block; }
-    .completion-banner h3 {
-      font-family: 'Noto Serif KR', serif;
-      font-size: 18px;
-      color: var(--soft-lavender);
-      margin-bottom: 6px;
-    }
+    .completion-banner h3 { font-family: 'Noto Serif KR', serif; font-size: 18px; color: var(--soft-lavender); margin-bottom: 6px; }
     .completion-banner p { font-size: 13px; color: var(--text3); }
 
-    /* Scrollbar */
+    #authBar { background: rgba(30,21,64,0.8); }
+    #authBar button { background: var(--card); border: 1px solid var(--border); color: var(--lavender); border-radius: 8px; padding: 6px 14px; font-size: 13px; font-family: 'Noto Sans KR', sans-serif; cursor: pointer; }
+    #authBar button:hover { border-color: var(--lavender); }
+    #userLabel { font-size: 12px; color: var(--text3); }
+
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
-    /* Responsive */
     @media (min-width: 480px) {
       #app { max-width: 480px; margin: 0 auto; }
     }
@@ -476,176 +218,620 @@
 </head>
 <body>
   <div id="authBar" style="display:flex;gap:8px;align-items:center;padding:12px 16px;">
-  <button id="loginBtn">Google로 로그인</button>
-  <button id="logoutBtn" style="display:none;">로그아웃</button>
-  <span id="userLabel" style="opacity:.9;"></span>
-</div>
-<div class="stars"></div>
-<div id="app">
-  <div class="header">
-    <div class="logo">미래저널 ✦</div>
-    <div class="logo-sub">AI는 도구다. 나는 방향이다.</div>
-    <div class="streak-badge">
-      <span>🔥</span>
-      <span id="streak-text">0일 연속 작성 중</span>
+    <button id="loginBtn">Google로 로그인</button>
+    <button id="logoutBtn" style="display:none;">로그아웃</button>
+    <span id="userLabel" style="opacity:.9;"></span>
+  </div>
+
+  <div class="stars"></div>
+
+  <div id="app">
+    <div class="header">
+      <div class="logo">미래저널 ✦</div>
+      <div class="logo-sub">AI는 도구다. 나는 방향이다.</div>
+      <div class="streak-badge">
+        <span>🔥</span>
+        <span id="streak-text">0일 연속 작성 중</span>
+      </div>
+    </div>
+
+    <!-- TODAY PAGE -->
+    <div id="page-today" class="page active">
+      <div class="date-label" id="today-date"></div>
+      <div class="greeting" id="greeting">오늘도 나를 향한 여정을 시작해요</div>
+      <div class="greeting-sub">6가지 질문에 답하며 9번째 지능을 훈련하세요</div>
+
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+
+      <div class="completion-banner" id="completion-banner">
+        <h3>✦ 오늘의 저널 완성!</h3>
+        <p>매일 쌓이는 기록이 나만의 성장 지도가 됩니다</p>
+      </div>
+
+      <div id="questions-container"></div>
+      <button class="save-btn" onclick="saveToday()">오늘의 저널 저장하기</button>
+    </div>
+
+    <!-- INSIGHT PAGE -->
+    <div id="page-insight" class="page">
+      <br>
+      <div class="section-title">📊 나의 성장 지도</div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-num" id="total-days">0</div>
+          <div class="stat-label">총 작성일</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="streak-num">0</div>
+          <div class="stat-label">연속 작성</div>
+        </div>
+      </div>
+
+      <div class="insight-card">
+        <h3>🤖 9번째 지능 지수</h3>
+        <div class="gauge-wrap">
+          <div class="gauge-num" id="ninth-score">--</div>
+          <div class="gauge-label">메타인지 · 서번트 리더십</div>
+          <div class="gauge-bar"><div class="gauge-fill" id="ninth-bar" style="width:0%"></div></div>
+          <div style="font-size:12px;color:var(--text3);" id="ninth-msg">저널을 쌓을수록 지수가 측정됩니다</div>
+        </div>
+      </div>
+
+      <div class="insight-card">
+        <h3>📅 이번 달 감정 달력</h3>
+        <div class="cal-grid" id="cal-grid"></div>
+      </div>
+
+      <div class="insight-card">
+        <h3>🔑 나의 핵심 키워드</h3>
+        <div id="keywords" style="display:flex;flex-wrap:wrap;gap:8px;min-height:40px;">
+          <span style="color:var(--text3);font-size:13px;">저널을 작성하면 키워드가 나타납니다</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- HISTORY PAGE -->
+    <div id="page-history" class="page">
+      <br>
+      <div class="section-title">📖 지난 기록</div>
+      <div id="history-list">
+        <div style="text-align:center;color:var(--text3);padding:40px 0;font-size:14px;">
+          아직 저장된 기록이 없어요<br>
+          <span style="font-size:12px;margin-top:8px;display:block">오늘의 저널을 작성해보세요!</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI PAGE -->
+    <div id="page-ai" class="page">
+      <br>
+      <div class="section-title">🤖 AI 동반자 상담</div>
+      <div class="ai-chat" id="ai-chat">
+        <div class="ai-msg-label">
+          <span style="width:20px;height:20px;background:linear-gradient(135deg,var(--purple),var(--indigo));border-radius:50%;display:inline-block"></span>
+          미래저널 AI
+        </div>
+        <div class="ai-msg" id="ai-welcome">
+          안녕하세요 😊 저는 당신의 저널 데이터를 기반으로 대화하는 AI 동반자예요.<br><br>
+          일반 AI는 지금 말한 것만 알지만, 저는 <strong>당신의 누적 기록</strong>을 바탕으로 더 깊은 대화를 나눌 수 있어요.<br><br>
+          오늘 어떤 것이 마음에 걸리나요?
+        </div>
+        <div id="ai-messages"></div>
+      </div>
+      <div class="ai-input-row">
+        <input class="ai-input" id="ai-input" placeholder="AI 동반자에게 말해보세요..." onkeydown="if(event.key==='Enter')sendAI()" />
+        <button class="ai-send" onclick="sendAI()">↑</button>
+      </div>
+      <div style="font-size:11px;color:var(--text3);text-align:center;margin-top:10px">
+        저널을 많이 쌓을수록 더 깊은 대화가 가능해요
+      </div>
     </div>
   </div>
 
-  <!-- TODAY PAGE -->
-  <div id="page-today" class="page active">
-    <div class="date-label" id="today-date"></div>
-    <div class="greeting" id="greeting">오늘도 나를 향한 여정을 시작해요</div>
-    <div class="greeting-sub">6가지 질문에 답하며 9번째 지능을 훈련하세요</div>
+  <!-- Bottom Nav -->
+  <nav class="nav">
+    <button class="nav-btn active" onclick="showPage('today',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      오늘
+    </button>
+    <button class="nav-btn" onclick="showPage('insight',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+      인사이트
+    </button>
+    <button class="nav-btn" onclick="showPage('history',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      기록
+    </button>
+    <button class="nav-btn" onclick="showPage('ai',this)">
+      <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+      AI상담
+    </button>
+  </nav>
 
-    <div class="progress-bar">
-      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
-    </div>
+  <div class="toast" id="toast"></div>
 
-    <div class="completion-banner" id="completion-banner">
-      <h3>✦ 오늘의 저널 완성!</h3>
-      <p>매일 쌓이는 기록이 나만의 성장 지도가 됩니다</p>
-    </div>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+  <script>
+  // ====== FIREBASE 초기화 ======
+  const firebaseConfig = {
+    apiKey: "AIzaSyCghP_tQeLW2IFDnWdEnOCY-t8ogOkVL04",
+    authDomain: "mirae-journal.firebaseapp.com",
+    projectId: "mirae-journal",
+  };
 
-    <div id="questions-container"></div>
-    <button class="save-btn" onclick="saveToday()">오늘의 저널 저장하기</button>
-  </div>
-
-  <!-- INSIGHT PAGE -->
-  <div id="page-insight" class="page">
-    <br>
-    <div class="section-title">📊 나의 성장 지도</div>
-
-    <div class="stats-row">
-      <div class="stat-card">
-        <div class="stat-num" id="total-days">0</div>
-        <div class="stat-label">총 작성일</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-num" id="streak-num">0</div>
-        <div class="stat-label">연속 작성</div>
-      </div>
-    </div>
-
-    <div class="insight-card">
-      <h3>🤖 9번째 지능 지수</h3>
-      <div class="gauge-wrap">
-        <div class="gauge-num" id="ninth-score">--</div>
-        <div class="gauge-label">메타인지 · 서번트 리더십</div>
-        <div class="gauge-bar"><div class="gauge-fill" id="ninth-bar" style="width:0%"></div></div>
-        <div style="font-size:12px;color:var(--text3);" id="ninth-msg">저널을 쌓을수록 지수가 측정됩니다</div>
-      </div>
-    </div>
-
-    <div class="insight-card">
-      <h3>📅 이번 달 감정 달력</h3>
-      <div class="cal-grid" id="cal-grid"></div>
-    </div>
-
-    <div class="insight-card">
-      <h3>🔑 나의 핵심 키워드</h3>
-      <div id="keywords" style="display:flex;flex-wrap:wrap;gap:8px;min-height:40px;">
-        <span style="color:var(--text3);font-size:13px;">저널을 작성하면 키워드가 나타납니다</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- HISTORY PAGE -->
-  <div id="page-history" class="page">
-    <br>
-    <div class="section-title">📖 지난 기록</div>
-    <div id="history-list">
-      <div style="text-align:center;color:var(--text3);padding:40px 0;font-size:14px;">
-        아직 저장된 기록이 없어요<br>
-        <span style="font-size:12px;margin-top:8px;display:block">오늘의 저널을 작성해보세요!</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- AI PAGE -->
-  <div id="page-ai" class="page">
-    <br>
-    <div class="section-title">🤖 AI 동반자 상담</div>
-    <div class="ai-chat" id="ai-chat">
-      <div class="ai-msg-label">
-        <span style="width:20px;height:20px;background:linear-gradient(135deg,var(--purple),var(--indigo));border-radius:50%;display:inline-block"></span>
-        미래저널 AI
-      </div>
-      <div class="ai-msg" id="ai-welcome">
-        안녕하세요 😊 저는 당신의 저널 데이터를 기반으로 대화하는 AI 동반자예요.<br><br>
-        일반 AI는 지금 말한 것만 알지만, 저는 <strong>당신의 누적 기록</strong>을 바탕으로 더 깊은 대화를 나눌 수 있어요.<br><br>
-        오늘 어떤 것이 마음에 걸리나요?
-      </div>
-      <div id="ai-messages"></div>
-    </div>
-    <div class="ai-input-row">
-      <input class="ai-input" id="ai-input" placeholder="AI 동반자에게 말해보세요..." onkeydown="if(event.key==='Enter')sendAI()" />
-      <button class="ai-send" onclick="sendAI()">↑</button>
-    </div>
-    <div style="font-size:11px;color:var(--text3);text-align:center;margin-top:10px">
-      저널을 많이 쌓을수록 더 깊은 대화가 가능해요
-    </div>
-  </div>
-</div>
-
-<!-- Bottom Nav -->
-<nav class="nav">
-  <button class="nav-btn active" onclick="showPage('today',this)">
-    <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-    오늘
-  </button>
-  <button class="nav-btn" onclick="showPage('insight',this)">
-    <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
-    인사이트
-  </button>
-  <button class="nav-btn" onclick="showPage('history',this)">
-    <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-    기록
-  </button>
-  <button class="nav-btn" onclick="showPage('ai',this)">
-    <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
-    AI상담
-  </button>
-</nav>
-
-<div class="toast" id="toast"></div>
-
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
-<script>
-const firebaseConfig = {
-  apiKey: "AIzaSyCghP_tQeLW2IFDnWdEnOCY-t8ogOkVL04",
-  authDomain: "mirae-journal.firebaseapp.com",
-  projectId: "mirae-journal",
-};
-try {
-  if (!firebase.apps.length) firebase.initializeApp(firebaseConfigig);
-  console.log("INIT OK", firebase.apps.length);
-} catch (e) {
-  console.error("INIT FAIL", e);
-}
-const auth = firebase.auth();
-const loginBtn = document.getElementById("loginBtn");
-const logoutBtn = document.getElementById("logoutBtn");
-const userLabel = document.getElementById("userLabel");
-
-loginBtn.addEventListener("click", async () => {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  await auth.signInWithPopup(provider);
-});
-
-logoutBtn.addEventListener("click", async () => {
-  await auth.signOut();
-});
-
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    loginBtn.style.display = "none";
-    logoutBtn.style.display = "inline-block";
-    userLabel.textContent = `${user.displayName || "User"} (${user.email || ""})`;
-  } else {
-    loginBtn.style.display = "inline-block";
-    logoutBtn.style.display = "none";
-    userLabel.textContent = "";
+  try {
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig); // ← 오타 수정 (ig 제거)
+    console.log("Firebase 초기화 성공");
+  } catch (e) {
+    console.error("Firebase 초기화 실패", e);
   }
-});
 
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+
+  // ====== AUTH ======
+  const loginBtn = document.getElementById("loginBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const userLabel = document.getElementById("userLabel");
+  let currentUser = null;
+
+  loginBtn.addEventListener("click", async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    try {
+      await auth.signInWithPopup(provider);
+    } catch(e) {
+      console.error("로그인 실패", e);
+      showToast("로그인에 실패했어요. 다시 시도해주세요.");
+    }
+  });
+
+  logoutBtn.addEventListener("click", async () => {
+    await auth.signOut();
+  });
+
+  auth.onAuthStateChanged((user) => {
+    currentUser = user;
+    if (user) {
+      loginBtn.style.display = "none";
+      logoutBtn.style.display = "inline-block";
+      userLabel.textContent = user.displayName || user.email || "User";
+      loadData();
+    } else {
+      loginBtn.style.display = "inline-block";
+      logoutBtn.style.display = "none";
+      userLabel.textContent = "";
+      resetUI();
+    }
+  });
+
+  // ====== 질문 목록 ======
+  const QUESTIONS = [
+    { emoji: "🌅", category: "아침 의도", text: "오늘 하루 가장 중요한 한 가지는 무엇인가요?" },
+    { emoji: "🧠", category: "메타인지", text: "지금 내 생각 중 가장 강하게 믿고 있는 것은 무엇인가요? 그게 정말 사실인가요?" },
+    { emoji: "💡", category: "통찰", text: "최근 깨달은 것이 있다면 무엇인가요?" },
+    { emoji: "🤝", category: "관계", text: "오늘 누군가에게 더 잘할 수 있었던 순간이 있었나요?" },
+    { emoji: "🔋", category: "에너지", text: "지금 내 에너지를 채워주는 것과 빼앗는 것은 무엇인가요?" },
+    { emoji: "🌱", category: "성장", text: "한 달 뒤의 나에게 오늘 무엇을 선물하고 싶나요?" },
+  ];
+
+  // ====== 앱 상태 ======
+  let todayAnswers = {};
+  let allEntries = {};
+
+  // ====== 초기화 ======
+  function init() {
+    setTodayDate();
+    renderQuestions();
+    loadLocalData();
+  }
+
+  function setTodayDate() {
+    const now = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+    document.getElementById("today-date").textContent = now.toLocaleDateString('ko-KR', options);
+  }
+
+  function resetUI() {
+    document.getElementById("streak-text").textContent = "0일 연속 작성 중";
+    document.getElementById("streak-num").textContent = "0";
+    document.getElementById("total-days").textContent = "0";
+    document.getElementById("ninth-score").textContent = "--";
+    document.getElementById("ninth-bar").style.width = "0%";
+    document.getElementById("history-list").innerHTML = `
+      <div style="text-align:center;color:var(--text3);padding:40px 0;font-size:14px;">
+        로그인하면 기록이 저장됩니다
+      </div>`;
+    allEntries = {};
+  }
+
+  // ====== 질문 렌더링 ======
+  function renderQuestions() {
+    const container = document.getElementById("questions-container");
+    container.innerHTML = "";
+    const todayKey = getTodayKey();
+
+    QUESTIONS.forEach((q, i) => {
+      const saved = todayAnswers[i] || "";
+      const card = document.createElement("div");
+      card.className = "question-card" + (saved ? " answered" : "");
+      card.innerHTML = `
+        <div class="q-header">
+          <span class="q-emoji">${q.emoji}</span>
+          <div class="q-meta">
+            <div class="q-category">${q.category}</div>
+            <div class="q-text">${q.text}</div>
+          </div>
+          <div class="q-check ${saved ? 'visible' : ''}" id="check-${i}">
+            <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
+          </div>
+        </div>
+        <textarea id="answer-${i}" placeholder="자유롭게 적어보세요..." rows="3">${saved}</textarea>
+        <button class="mic-btn" onclick="toggleMic(${i})" id="mic-${i}">
+          🎙 음성으로 입력
+        </button>
+      `;
+      container.appendChild(card);
+
+      const ta = card.querySelector(`#answer-${i}`);
+      ta.addEventListener("input", () => {
+        todayAnswers[i] = ta.value;
+        const hasVal = ta.value.trim().length > 0;
+        card.classList.toggle("answered", hasVal);
+        document.getElementById(`check-${i}`).classList.toggle("visible", hasVal);
+        updateProgress();
+        saveLocalData();
+      });
+    });
+
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const answered = QUESTIONS.filter((_, i) => todayAnswers[i] && todayAnswers[i].trim()).length;
+    const pct = (answered / QUESTIONS.length) * 100;
+    document.getElementById("progress-fill").style.width = pct + "%";
+    const banner = document.getElementById("completion-banner");
+    banner.classList.toggle("show", answered === QUESTIONS.length);
+  }
+
+  // ====== 저장 ======
+  function getTodayKey() {
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+  }
+
+  function saveLocalData() {
+    const todayKey = getTodayKey();
+    const data = JSON.parse(localStorage.getItem("mirae_today") || "{}");
+    data[todayKey] = todayAnswers;
+    localStorage.setItem("mirae_today", JSON.stringify(data));
+  }
+
+  function loadLocalData() {
+    const todayKey = getTodayKey();
+    const data = JSON.parse(localStorage.getItem("mirae_today") || "{}");
+    if (data[todayKey]) {
+      todayAnswers = data[todayKey];
+      renderQuestions();
+    }
+  }
+
+  async function saveToday() {
+    const answered = QUESTIONS.filter((_, i) => todayAnswers[i] && todayAnswers[i].trim()).length;
+    if (answered === 0) {
+      showToast("최소 한 가지 질문에 답해주세요 🙏");
+      return;
+    }
+
+    const todayKey = getTodayKey();
+    const entry = {
+      date: todayKey,
+      answers: todayAnswers,
+      savedAt: new Date().toISOString(),
+      answeredCount: answered
+    };
+
+    // 로컬 저장
+    allEntries[todayKey] = entry;
+    localStorage.setItem("mirae_entries", JSON.stringify(allEntries));
+    saveLocalData();
+
+    // Firebase 저장 (로그인 시)
+    if (currentUser) {
+      try {
+        await db.collection("users").doc(currentUser.uid)
+          .collection("entries").doc(todayKey).set(entry);
+        showToast("☁️ 클라우드에 저장됐어요!");
+      } catch(e) {
+        console.error("Firebase 저장 실패", e);
+        showToast("로컬에 저장됐어요 ✓");
+      }
+    } else {
+      showToast("로컬에 저장됐어요 ✓ (로그인하면 클라우드 저장)");
+    }
+
+    updateStats();
+    renderHistory();
+    renderInsight();
+  }
+
+  // ====== 데이터 로드 ======
+  async function loadData() {
+    // 로컬 먼저
+    const local = JSON.parse(localStorage.getItem("mirae_entries") || "{}");
+    allEntries = local;
+
+    // Firebase에서 가져오기
+    if (currentUser) {
+      try {
+        const snap = await db.collection("users").doc(currentUser.uid)
+          .collection("entries").orderBy("date", "desc").limit(100).get();
+        snap.forEach(doc => {
+          allEntries[doc.id] = doc.data();
+        });
+        localStorage.setItem("mirae_entries", JSON.stringify(allEntries));
+      } catch(e) {
+        console.error("Firebase 로드 실패", e);
+      }
+    }
+
+    updateStats();
+    renderHistory();
+    renderInsight();
+  }
+
+  // ====== 통계 ======
+  function updateStats() {
+    const keys = Object.keys(allEntries).sort();
+    const total = keys.length;
+    document.getElementById("total-days").textContent = total;
+
+    // 연속 작성 계산
+    let streak = 0;
+    const today = new Date();
+    for (let i = 0; i < 365; i++) {
+      const d = new Date(today);
+      d.setDate(d.getDate() - i);
+      const key = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+      if (allEntries[key]) streak++;
+      else if (i > 0) break;
+    }
+
+    document.getElementById("streak-num").textContent = streak;
+    document.getElementById("streak-text").textContent = `${streak}일 연속 작성 중`;
+
+    // 9번째 지능 지수 (저널 수 기반 계산)
+    if (total >= 3) {
+      const score = Math.min(100, Math.round(20 + (total * 3) + (streak * 2)));
+      document.getElementById("ninth-score").textContent = score;
+      document.getElementById("ninth-bar").style.width = score + "%";
+      document.getElementById("ninth-msg").textContent = score >= 80 ? "탁월한 자기인식 수준이에요! 🌟" : score >= 50 ? "꾸준히 성장하고 있어요 📈" : "계속 기록하면 지수가 올라가요";
+    }
+  }
+
+  // ====== 히스토리 ======
+  function renderHistory() {
+    const container = document.getElementById("history-list");
+    const keys = Object.keys(allEntries).sort().reverse();
+
+    if (keys.length === 0) {
+      container.innerHTML = `<div style="text-align:center;color:var(--text3);padding:40px 0;font-size:14px;">아직 저장된 기록이 없어요<br><span style="font-size:12px;margin-top:8px;display:block">오늘의 저널을 작성해보세요!</span></div>`;
+      return;
+    }
+
+    container.innerHTML = keys.map(key => {
+      const entry = allEntries[key];
+      const answers = entry.answers || {};
+      const firstAnswered = QUESTIONS.findIndex((_, i) => answers[i] && answers[i].trim());
+
+      return `
+        <div class="history-item">
+          <div class="history-date">${formatDate(key)} · ${entry.answeredCount || 0}개 답변</div>
+          ${firstAnswered >= 0 ? `
+            <div class="history-q">${QUESTIONS[firstAnswered].emoji} ${QUESTIONS[firstAnswered].text}</div>
+            <div class="history-a history-preview">${answers[firstAnswered]}</div>
+          ` : ''}
+        </div>
+      `;
+    }).join("");
+  }
+
+  function formatDate(key) {
+    const [y, m, d] = key.split("-");
+    const date = new Date(y, m-1, d);
+    return date.toLocaleDateString('ko-KR', { month: 'long', day: 'numeric', weekday: 'short' });
+  }
+
+  // ====== 인사이트 ======
+  function renderInsight() {
+    renderCalendar();
+    renderKeywords();
+  }
+
+  function renderCalendar() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const daysInMonth = new Date(year, month+1, 0).getDate();
+    const firstDay = new Date(year, month, 1).getDay();
+    const todayDate = now.getDate();
+
+    const grid = document.getElementById("cal-grid");
+    grid.innerHTML = "";
+
+    // 빈칸
+    for (let i = 0; i < firstDay; i++) {
+      const el = document.createElement("div");
+      el.className = "cal-day";
+      grid.appendChild(el);
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const key = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const hasEntry = !!allEntries[key];
+      const isToday = d === todayDate;
+      const el = document.createElement("div");
+      el.className = "cal-day" + (hasEntry ? " has-entry" : "") + (isToday ? " today" : "");
+      el.textContent = hasEntry ? "✦" : d;
+      grid.appendChild(el);
+    }
+  }
+
+  function renderKeywords() {
+    const allText = Object.values(allEntries).map(e => {
+      return Object.values(e.answers || {}).join(" ");
+    }).join(" ");
+
+    if (!allText.trim()) return;
+
+    // 간단한 키워드 추출 (빈도 기반)
+    const words = allText.split(/[\s,。、.!?]+/).filter(w => w.length > 1);
+    const freq = {};
+    const stopwords = new Set(["나는","나의","내가","그리고","하지만","것이","것을","있는","있어","이다","에서","하고","으로","에게","부터","까지","때문","이런","그런","어떤","모든","같은","더욱","오늘","어제","내일","정말","아주","매우","조금","많이","항상","때로"]);
+    words.forEach(w => {
+      if (!stopwords.has(w)) freq[w] = (freq[w] || 0) + 1;
+    });
+
+    const sorted = Object.entries(freq).sort((a,b) => b[1]-a[1]).slice(0, 10);
+    const container = document.getElementById("keywords");
+
+    if (sorted.length === 0) {
+      container.innerHTML = `<span style="color:var(--text3);font-size:13px;">저널을 작성하면 키워드가 나타납니다</span>`;
+      return;
+    }
+
+    container.innerHTML = sorted.map(([word, count]) => `
+      <span style="background:rgba(124,58,237,0.2);border:1px solid var(--border);border-radius:20px;padding:4px 12px;font-size:13px;color:var(--lavender);">
+        ${word} <span style="opacity:0.6;font-size:11px;">${count}</span>
+      </span>
+    `).join("");
+  }
+
+  // ====== 페이지 전환 ======
+  function showPage(name, btn) {
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+    document.getElementById("page-" + name).classList.add("active");
+    btn.classList.add("active");
+
+    if (name === "insight") renderInsight();
+    if (name === "history") renderHistory();
+  }
+
+  // ====== AI 상담 ======
+  function sendAI() {
+    const input = document.getElementById("ai-input");
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    const msgContainer = document.getElementById("ai-messages");
+    msgContainer.innerHTML += `<div class="user-msg">${msg}</div>`;
+
+    input.value = "";
+
+    // 간단한 응답 (실제 AI API 연동 가능)
+    setTimeout(() => {
+      const totalEntries = Object.keys(allEntries).length;
+      let reply = "";
+
+      if (totalEntries === 0) {
+        reply = "아직 저널이 없네요. 오늘 첫 저널을 작성해보면 제가 더 깊은 이야기를 나눌 수 있어요 😊";
+      } else {
+        const responses = [
+          `${totalEntries}일 간의 기록을 보면, 당신은 꾸준히 자신을 돌아보고 있어요. 그 자체가 이미 9번째 지능의 실천이에요.`,
+          "당신의 질문에서 성장하려는 의지가 느껴져요. 조금 더 구체적으로 말해줄 수 있어요?",
+          "저널에서 반복적으로 나타나는 패턴이 있어요. 무엇이 당신에게 에너지를 주는지 생각해보셨나요?",
+          "좋은 질문이에요. 과거의 기록을 보면, 당신은 이런 고민을 전에도 해결했어요. 그때 어떻게 했는지 기억하시나요?",
+        ];
+        reply = responses[Math.floor(Math.random() * responses.length)];
+      }
+
+      msgContainer.innerHTML += `
+        <div class="ai-msg-label">
+          <span style="width:16px;height:16px;background:linear-gradient(135deg,var(--purple),var(--indigo));border-radius:50%;display:inline-block"></span>
+          미래저널 AI
+        </div>
+        <div class="ai-msg">${reply}</div>
+      `;
+
+      const chat = document.getElementById("ai-chat");
+      chat.scrollTop = chat.scrollHeight;
+    }, 600);
+
+    const chat = document.getElementById("ai-chat");
+    chat.scrollTop = chat.scrollHeight;
+  }
+
+  // ====== 음성 입력 ======
+  let recognition = null;
+  let activeRecMic = null;
+
+  function toggleMic(qIndex) {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      showToast("이 브라우저는 음성 입력을 지원하지 않아요");
+      return;
+    }
+
+    const btn = document.getElementById(`mic-${qIndex}`);
+    const ta = document.getElementById(`answer-${qIndex}`);
+
+    if (recognition && activeRecMic === qIndex) {
+      recognition.stop();
+      return;
+    }
+
+    if (recognition) recognition.stop();
+
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SpeechRecognition();
+    recognition.lang = "ko-KR";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    activeRecMic = qIndex;
+
+    btn.classList.add("recording");
+    btn.textContent = "🔴 녹음 중... (클릭하여 중지)";
+
+    recognition.onresult = (e) => {
+      const transcript = e.results[0][0].transcript;
+      ta.value = (ta.value ? ta.value + " " : "") + transcript;
+      todayAnswers[qIndex] = ta.value;
+      ta.dispatchEvent(new Event("input"));
+    };
+
+    recognition.onend = () => {
+      btn.classList.remove("recording");
+      btn.innerHTML = "🎙 음성으로 입력";
+      activeRecMic = null;
+      recognition = null;
+    };
+
+    recognition.onerror = (e) => {
+      console.error("음성인식 오류", e);
+      btn.classList.remove("recording");
+      btn.innerHTML = "🎙 음성으로 입력";
+      activeRecMic = null;
+      recognition = null;
+    };
+
+    recognition.start();
+  }
+
+  // ====== 토스트 ======
+  function showToast(msg) {
+    const toast = document.getElementById("toast");
+    toast.textContent = msg;
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 3000);
+  }
+
+  // ====== 시작 ======
+  init();
+  </script>
+</body>
+</html>

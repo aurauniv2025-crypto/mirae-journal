@@ -144,6 +144,8 @@
 
     .insight-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
     .insight-card h3 { font-size: 14px; color: var(--text2); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+    .insight-story { font-size: 14px; color: var(--text); line-height: 1.9; }
+    .insight-story strong { color: var(--soft-lavender); }
 
     .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
     .cal-day { aspect-ratio: 1; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--text3); }
@@ -158,16 +160,6 @@
       -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
     .stat-label { font-size: 12px; color: var(--text3); margin-top: 4px; }
-
-    .gauge-wrap { text-align: center; padding: 8px 0; }
-    .gauge-num {
-      font-family: 'Noto Serif KR', serif; font-size: 48px; font-weight: 700;
-      background: linear-gradient(135deg, var(--soft-lavender), var(--lavender), var(--purple));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .gauge-label { font-size: 13px; color: var(--text3); margin-top: 4px; }
-    .gauge-bar { height: 8px; background: var(--bg3); border-radius: 4px; margin: 12px 0 6px; overflow: hidden; }
-    .gauge-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--indigo), var(--purple), var(--lavender)); }
 
     .history-item { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin-bottom: 12px; }
     .history-date { font-size: 12px; color: var(--text3); margin-bottom: 10px; }
@@ -238,8 +230,8 @@
     <!-- TODAY PAGE -->
     <div id="page-today" class="page active">
       <div class="date-label" id="today-date"></div>
-      <div class="greeting" id="greeting">오늘도 나를 향한 여정을 시작해요</div>
-      <div class="greeting-sub">6가지 질문에 답하며 9번째 지능을 훈련하세요</div>
+      <div class="greeting">오늘도 나를 향한 여정을 시작해요</div>
+      <div class="greeting-sub">6가지 질문에 답하며 나만의 중심을 훈련하세요</div>
 
       <div class="progress-bar">
         <div class="progress-fill" id="progress-fill" style="width:0%"></div>
@@ -257,7 +249,7 @@
     <!-- INSIGHT PAGE -->
     <div id="page-insight" class="page">
       <br>
-      <div class="section-title">📊 나의 성장 지도</div>
+      <div class="section-title">📊 나의 성장 이야기</div>
 
       <div class="stats-row">
         <div class="stat-card">
@@ -271,17 +263,14 @@
       </div>
 
       <div class="insight-card">
-        <h3>🤖 9번째 지능 지수</h3>
-        <div class="gauge-wrap">
-          <div class="gauge-num" id="ninth-score">--</div>
-          <div class="gauge-label">메타인지 · 서번트 리더십</div>
-          <div class="gauge-bar"><div class="gauge-fill" id="ninth-bar" style="width:0%"></div></div>
-          <div style="font-size:12px;color:var(--text3);" id="ninth-msg">저널을 쌓을수록 지수가 측정됩니다</div>
+        <h3>✨ 나에 대한 이야기</h3>
+        <div class="insight-story" id="insight-story">
+          저널을 작성하면 당신에 대한 이야기가 쌓이기 시작해요.
         </div>
       </div>
 
       <div class="insight-card">
-        <h3>📅 이번 달 감정 달력</h3>
+        <h3>📅 이번 달 기록</h3>
         <div class="cal-grid" id="cal-grid"></div>
       </div>
 
@@ -314,7 +303,7 @@
           <span style="width:20px;height:20px;background:linear-gradient(135deg,var(--purple),var(--indigo));border-radius:50%;display:inline-block"></span>
           미래저널 AI
         </div>
-        <div class="ai-msg" id="ai-welcome">
+        <div class="ai-msg">
           안녕하세요 😊 저는 당신의 저널 데이터를 기반으로 대화하는 AI 동반자예요.<br><br>
           일반 AI는 지금 말한 것만 알지만, 저는 <strong>당신의 누적 기록</strong>을 바탕으로 더 깊은 대화를 나눌 수 있어요.<br><br>
           오늘 어떤 것이 마음에 걸리나요?
@@ -357,16 +346,20 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
   <script>
-  // ====== FIREBASE 초기화 ======
+  // ====== FIREBASE 초기화 (완성된 config) ======
   const firebaseConfig = {
-    apiKey: "AIzaSyCghP_tQeLW2IFDnWdEnOCY-t8ogOkVL04",
+    apiKey: "AIzaSyCghP_tQelW2TFDmWdEnOCY-t8ogoKvL04",
     authDomain: "mirae-journal.firebaseapp.com",
     projectId: "mirae-journal",
+    storageBucket: "mirae-journal.firebasestorage.app",
+    messagingSenderId: "1062764613182",
+    appId: "1:1062764613182:web:f372fc7cf16b1661ce4b6f",
+    measurementId: "G-L4GV33S898"
   };
 
   try {
-    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig); // ← 오타 수정 (ig 제거)
-    console.log("Firebase 초기화 성공");
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    console.log("✅ Firebase 초기화 성공");
   } catch (e) {
     console.error("Firebase 초기화 실패", e);
   }
@@ -409,14 +402,14 @@
     }
   });
 
-  // ====== 질문 목록 ======
+  // ====== 질문 목록 — 감사가 반드시 첫 번째 ======
   const QUESTIONS = [
-    { emoji: "🌅", category: "아침 의도", text: "오늘 하루 가장 중요한 한 가지는 무엇인가요?" },
+    { emoji: "🌸", category: "감사", text: "오늘 감사한 것 3가지를 적어보세요. 당연하게 여겼던 것도 좋아요." },
     { emoji: "🧠", category: "메타인지", text: "지금 내 생각 중 가장 강하게 믿고 있는 것은 무엇인가요? 그게 정말 사실인가요?" },
-    { emoji: "💡", category: "통찰", text: "최근 깨달은 것이 있다면 무엇인가요?" },
-    { emoji: "🤝", category: "관계", text: "오늘 누군가에게 더 잘할 수 있었던 순간이 있었나요?" },
-    { emoji: "🔋", category: "에너지", text: "지금 내 에너지를 채워주는 것과 빼앗는 것은 무엇인가요?" },
-    { emoji: "🌱", category: "성장", text: "한 달 뒤의 나에게 오늘 무엇을 선물하고 싶나요?" },
+    { emoji: "🤝", category: "관계·경청", text: "오늘 누군가의 말을 진심으로 들은 순간이 있었나요?" },
+    { emoji: "🔋", category: "에너지", text: "지금 나를 채워주는 것과 빼앗는 것은 무엇인가요?" },
+    { emoji: "🌱", category: "성장 의도", text: "한 달 뒤의 나에게 오늘 무엇을 선물하고 싶나요?" },
+    { emoji: "💡", category: "통찰", text: "오늘 또는 최근, 새롭게 깨달은 것이 있다면 무엇인가요?" },
   ];
 
   // ====== 앱 상태 ======
@@ -440,8 +433,7 @@
     document.getElementById("streak-text").textContent = "0일 연속 작성 중";
     document.getElementById("streak-num").textContent = "0";
     document.getElementById("total-days").textContent = "0";
-    document.getElementById("ninth-score").textContent = "--";
-    document.getElementById("ninth-bar").style.width = "0%";
+    document.getElementById("insight-story").textContent = "로그인하면 나에 대한 이야기가 쌓이기 시작해요.";
     document.getElementById("history-list").innerHTML = `
       <div style="text-align:center;color:var(--text3);padding:40px 0;font-size:14px;">
         로그인하면 기록이 저장됩니다
@@ -453,7 +445,6 @@
   function renderQuestions() {
     const container = document.getElementById("questions-container");
     container.innerHTML = "";
-    const todayKey = getTodayKey();
 
     QUESTIONS.forEach((q, i) => {
       const saved = todayAnswers[i] || "";
@@ -495,8 +486,7 @@
     const answered = QUESTIONS.filter((_, i) => todayAnswers[i] && todayAnswers[i].trim()).length;
     const pct = (answered / QUESTIONS.length) * 100;
     document.getElementById("progress-fill").style.width = pct + "%";
-    const banner = document.getElementById("completion-banner");
-    banner.classList.toggle("show", answered === QUESTIONS.length);
+    document.getElementById("completion-banner").classList.toggle("show", answered === QUESTIONS.length);
   }
 
   // ====== 저장 ======
@@ -541,15 +531,16 @@
     localStorage.setItem("mirae_entries", JSON.stringify(allEntries));
     saveLocalData();
 
-    // Firebase 저장 (로그인 시)
+    // Firebase 저장
     if (currentUser) {
       try {
         await db.collection("users").doc(currentUser.uid)
           .collection("entries").doc(todayKey).set(entry);
-        showToast("☁️ 클라우드에 저장됐어요!");
+        showToast("☁️ 저장됐어요! 오늘의 기록이 쌓였어요 ✦");
+        console.log("✅ Firestore 저장 성공:", todayKey);
       } catch(e) {
         console.error("Firebase 저장 실패", e);
-        showToast("로컬에 저장됐어요 ✓");
+        showToast("로컬 저장 완료 (Firebase 오류: " + e.code + ")");
       }
     } else {
       showToast("로컬에 저장됐어요 ✓ (로그인하면 클라우드 저장)");
@@ -562,11 +553,9 @@
 
   // ====== 데이터 로드 ======
   async function loadData() {
-    // 로컬 먼저
     const local = JSON.parse(localStorage.getItem("mirae_entries") || "{}");
     allEntries = local;
 
-    // Firebase에서 가져오기
     if (currentUser) {
       try {
         const snap = await db.collection("users").doc(currentUser.uid)
@@ -575,6 +564,7 @@
           allEntries[doc.id] = doc.data();
         });
         localStorage.setItem("mirae_entries", JSON.stringify(allEntries));
+        console.log("✅ Firebase 로드 성공, 총", snap.size, "개");
       } catch(e) {
         console.error("Firebase 로드 실패", e);
       }
@@ -585,13 +575,12 @@
     renderInsight();
   }
 
-  // ====== 통계 ======
+  // ====== 통계 + 이야기형 인사이트 ======
   function updateStats() {
     const keys = Object.keys(allEntries).sort();
     const total = keys.length;
     document.getElementById("total-days").textContent = total;
 
-    // 연속 작성 계산
     let streak = 0;
     const today = new Date();
     for (let i = 0; i < 365; i++) {
@@ -605,13 +594,48 @@
     document.getElementById("streak-num").textContent = streak;
     document.getElementById("streak-text").textContent = `${streak}일 연속 작성 중`;
 
-    // 9번째 지능 지수 (저널 수 기반 계산)
-    if (total >= 3) {
-      const score = Math.min(100, Math.round(20 + (total * 3) + (streak * 2)));
-      document.getElementById("ninth-score").textContent = score;
-      document.getElementById("ninth-bar").style.width = score + "%";
-      document.getElementById("ninth-msg").textContent = score >= 80 ? "탁월한 자기인식 수준이에요! 🌟" : score >= 50 ? "꾸준히 성장하고 있어요 📈" : "계속 기록하면 지수가 올라가요";
+    generateStory(total, streak, keys);
+  }
+
+  function generateStory(total, streak, keys) {
+    const storyEl = document.getElementById("insight-story");
+    if (total === 0) {
+      storyEl.innerHTML = "저널을 작성하면 당신에 대한 이야기가 쌓이기 시작해요.";
+      return;
     }
+
+    // 가장 많이 답한 카테고리
+    const catCount = {};
+    Object.values(allEntries).forEach(entry => {
+      Object.entries(entry.answers || {}).forEach(([idx, ans]) => {
+        if (ans && ans.trim()) {
+          const cat = QUESTIONS[idx]?.category || "";
+          catCount[cat] = (catCount[cat] || 0) + 1;
+        }
+      });
+    });
+    const topCat = Object.entries(catCount).sort((a,b) => b[1]-a[1])[0];
+
+    let story = "";
+    if (total === 1) {
+      story = `<strong>첫 번째 저널</strong>을 완성했어요. 이 한 걸음이 나를 향한 여정의 시작이에요.`;
+    } else if (total < 7) {
+      story = `지난 <strong>${total}일</strong> 동안 스스로에게 질문하고 있어요. 이미 많은 사람들이 하지 못하는 일을 하고 있어요.`;
+    } else if (total < 30) {
+      story = `<strong>${total}일</strong>의 기록이 쌓였어요. 매일 자신에게 질문하는 사람은 많지 않아요 — 당신은 그 길을 걷고 있어요.`;
+    } else {
+      story = `<strong>${total}일</strong>의 기록이 당신만의 성장 지도가 되고 있어요. 이 데이터는 MBTI가 절대 줄 수 없는 살아있는 자기이해예요.`;
+    }
+
+    if (topCat) {
+      story += `<br><br>특히 <strong>${topCat[0]}</strong>에 대한 이야기를 가장 많이 했어요.`;
+    }
+
+    if (streak >= 3) {
+      story += `<br><br>🔥 <strong>${streak}일 연속</strong> 작성 중이에요. 이 습관이 조용히 나를 바꾸고 있어요.`;
+    }
+
+    storyEl.innerHTML = story;
   }
 
   // ====== 히스토리 ======
@@ -664,7 +688,6 @@
     const grid = document.getElementById("cal-grid");
     grid.innerHTML = "";
 
-    // 빈칸
     for (let i = 0; i < firstDay; i++) {
       const el = document.createElement("div");
       el.className = "cal-day";
@@ -689,10 +712,9 @@
 
     if (!allText.trim()) return;
 
-    // 간단한 키워드 추출 (빈도 기반)
     const words = allText.split(/[\s,。、.!?]+/).filter(w => w.length > 1);
     const freq = {};
-    const stopwords = new Set(["나는","나의","내가","그리고","하지만","것이","것을","있는","있어","이다","에서","하고","으로","에게","부터","까지","때문","이런","그런","어떤","모든","같은","더욱","오늘","어제","내일","정말","아주","매우","조금","많이","항상","때로"]);
+    const stopwords = new Set(["나는","나의","내가","그리고","하지만","것이","것을","있는","있어","이다","에서","하고","으로","에게","부터","까지","때문","이런","그런","어떤","모든","같은","더욱","오늘","어제","내일","정말","아주","매우","조금","많이","항상","때로","수도","없는","하는","되는","되어","했다","한다","할수","이것","저것","그것","위해"]);
     words.forEach(w => {
       if (!stopwords.has(w)) freq[w] = (freq[w] || 0) + 1;
     });
@@ -718,7 +740,6 @@
     document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
     document.getElementById("page-" + name).classList.add("active");
     btn.classList.add("active");
-
     if (name === "insight") renderInsight();
     if (name === "history") renderHistory();
   }
@@ -731,10 +752,8 @@
 
     const msgContainer = document.getElementById("ai-messages");
     msgContainer.innerHTML += `<div class="user-msg">${msg}</div>`;
-
     input.value = "";
 
-    // 간단한 응답 (실제 AI API 연동 가능)
     setTimeout(() => {
       const totalEntries = Object.keys(allEntries).length;
       let reply = "";
@@ -743,7 +762,7 @@
         reply = "아직 저널이 없네요. 오늘 첫 저널을 작성해보면 제가 더 깊은 이야기를 나눌 수 있어요 😊";
       } else {
         const responses = [
-          `${totalEntries}일 간의 기록을 보면, 당신은 꾸준히 자신을 돌아보고 있어요. 그 자체가 이미 9번째 지능의 실천이에요.`,
+          `${totalEntries}일 간의 기록을 보면, 당신은 꾸준히 자신을 돌아보고 있어요. 그 자체가 이미 나만의 중심을 만드는 훈련이에요.`,
           "당신의 질문에서 성장하려는 의지가 느껴져요. 조금 더 구체적으로 말해줄 수 있어요?",
           "저널에서 반복적으로 나타나는 패턴이 있어요. 무엇이 당신에게 에너지를 주는지 생각해보셨나요?",
           "좋은 질문이에요. 과거의 기록을 보면, 당신은 이런 고민을 전에도 해결했어요. 그때 어떻게 했는지 기억하시나요?",
@@ -758,13 +777,8 @@
         </div>
         <div class="ai-msg">${reply}</div>
       `;
-
-      const chat = document.getElementById("ai-chat");
-      chat.scrollTop = chat.scrollHeight;
+      document.getElementById("ai-chat").scrollTop = document.getElementById("ai-chat").scrollHeight;
     }, 600);
-
-    const chat = document.getElementById("ai-chat");
-    chat.scrollTop = chat.scrollHeight;
   }
 
   // ====== 음성 입력 ======
@@ -780,11 +794,7 @@
     const btn = document.getElementById(`mic-${qIndex}`);
     const ta = document.getElementById(`answer-${qIndex}`);
 
-    if (recognition && activeRecMic === qIndex) {
-      recognition.stop();
-      return;
-    }
-
+    if (recognition && activeRecMic === qIndex) { recognition.stop(); return; }
     if (recognition) recognition.stop();
 
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -807,16 +817,14 @@
     recognition.onend = () => {
       btn.classList.remove("recording");
       btn.innerHTML = "🎙 음성으로 입력";
-      activeRecMic = null;
-      recognition = null;
+      activeRecMic = null; recognition = null;
     };
 
     recognition.onerror = (e) => {
       console.error("음성인식 오류", e);
       btn.classList.remove("recording");
       btn.innerHTML = "🎙 음성으로 입력";
-      activeRecMic = null;
-      recognition = null;
+      activeRecMic = null; recognition = null;
     };
 
     recognition.start();

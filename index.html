@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>미래저널 — AI가 대체할 수 없는 능력을 매일 훈련하는 플랫폼</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple: #7C3AED;
+      --indigo: #4F46E5;
+      --lavender: #A78BFA;
+      --soft-lavender: #C4B5FD;
+      --bg: #0F0B1E;
+      --bg2: #1A1332;
+      --bg3: #231A45;
+      --card: #1E1540;
+      --card2: #2A1D58;
+      --border: rgba(167,139,250,0.18);
+      --text: #F3F0FF;
+      --text2: #C4B5FD;
+      --text3: #9C85D4;
+      --success: #34D399;
+    }
+
+    body {
+      font-family: 'Noto Sans KR', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Stars background */
+    .stars {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background: radial-gradient(ellipse at 20% 50%, rgba(79,70,229,0.08) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 20%, rgba(124,58,237,0.06) 0%, transparent 60%);
+    }
+    .stars::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 70% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 85% 25%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 40% 75%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 85%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 45%, rgba(200,180,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 25%, rgba(200,180,255,0.4) 0%, transparent 100%);
+    }
+
+    /* App layout */
+    #app { position: relative; z-index: 1; min-height: 100vh; padding-bottom: 80px; }
+
+    /* Header */
+    .header {
+      text-align: center;
+      padding: 40px 20px 24px;
+    }
+    .logo {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 28px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--soft-lavender), var(--lavender), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+    .logo-sub {
+      font-size: 12px;
+      color: var(--text3);
+      margin-top: 4px;
+      letter-spacing: 0.5px;
+    }
+    .streak-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(124,58,237,0.2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 13px;
+      color: var(--lavender);
+      margin-top: 12px;
+    }
+
+    /* Nav tabs */
+    .nav {
+      display: flex;
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 100;
+    }
+    .nav-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      padding: 10px 4px;
+      background: none;
+      border: none;
+      color: var(--text3);
+      font-size: 10px;
+      font-family: 'Noto Sans KR', sans-serif;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .nav-btn.active { color: var(--lavender); }
+    .nav-btn svg { width: 22px; height: 22px; }
+
+    /* Pages */
+    .page { display: none; padding: 0 16px; }
+    .page.active { display: block; }
+
+    /* Today page */
+    .date-label {
+      text-align: center;
+      color: var(--text3);
+      font-size: 13px;
+      margin-bottom: 20px;
+    }
+    .greeting {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 20px;
+      font-weight: 600;
+      text-align: center;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .greeting-sub {
+      font-size: 13px;
+      color: var(--text3);
+      text-align: center;
+      margin-bottom: 28px;
+    }
+
+    /* Question cards */
+    .question-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      transition: border-color 0.2s;
+    }
+    .question-card.answered { border-color: rgba(167,139,250,0.4); }
+    .q-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .q-emoji { font-size: 22px; }
+    .q-meta { flex: 1; }
+    .q-category { font-size: 11px; color: var(--text3); margin-bottom: 2px; }
+    .q-text {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .q-check {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: rgba(52,211,153,0.15);
+      border: 1px solid var(--success);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+      flex-shrink: 0;
+    }
+    .q-check.visible { opacity: 1; }
+    .q-check svg { width: 13px; height: 13px; color: var(--success); }
+
+    textarea {
+      width: 100%;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+      padding: 12px;
+      resize: none;
+      min-height: 90px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    textarea:focus { border-color: var(--lavender); }
+    textarea::placeholder { color: var(--text3); }
+
+    .mic-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text3);
+      font-size: 12px;
+      font-family: 'Noto Sans KR', sans-serif;
+      padding: 6px 12px;
+      margin-top: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .mic-btn:hover { color: var(--lavender); border-color: var(--lavender); }
+    .mic-btn.recording { color: #F87171; border-color: #F87171; animation: pulse 1s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+    .save-btn {
+      width: 100%;
+      background: linear-gradient(135deg, var(--purple), var(--indigo));
+      border: none;
+      border-radius: 14px;
+      color: white;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 16px;
+      margin-top: 8px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .save-btn:hover { opacity: 0.9; }
+    .save-btn:active { transform: scale(0.98); }
+
+    /* Progress */
+    .progress-bar {
+      background: var(--bg3);
+      border-radius: 4px;
+      height: 4px;
+      margin: 0 0 24px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--purple), var(--lavender));
+      transition: width 0.4s ease;
+    }
+
+    /* Insight page */
+    .section-title {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .insight-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .insight-card h3 {
+      font-size: 14px;
+      color: var(--text2);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Emotion calendar */
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+    .cal-day {
+      aspect-ratio: 1;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: var(--text3);
+    }
+    .cal-day.has-entry {
+      background: linear-gradient(135deg, var(--purple), var(--indigo));
+      color: white;
+      font-size: 14px;
+    }
+    .cal-day.today {
+      border: 1px solid var(--lavender);
+    }
+
+    /* Stats */
+    .stats-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 32px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--soft-lavender), var(--lavender));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label { font-size: 12px; color: var(--text3); margin-top: 4px; }
+
+    /* Index gauge */
+    .gauge-wrap { text-align: center; padding: 8px 0; }
+    .gauge-num {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 48px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--soft-lavender), var(--lavender), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .gauge-label { font-size: 13px; color: var(--text3); margin-top: 4px; }
+    .gauge-bar {
+      height: 8px;
+      background: var(--bg3);
+      border-radius: 4px;
+      margin: 12px 0 6px;
+      overflow: hidden;
+    }
+    .gauge-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--indigo), var(--purple), var(--lavender));
+    }
+
+    /* History page */
+    .history-item {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .history-date { font-size: 12px; color: var(--text3); margin-bottom: 10px; }
+    .history-q { font-size: 12px; color: var(--lavender); margin-bottom: 4px; }
+    .history-a { font-size: 14px; color: var(--text); line-height: 1.6; }
+    .history-preview {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* AI page */
+    .ai-chat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 16px;
+      min-height: 200px;
+    }
+    .ai-msg {
+      background: var(--bg3);
+      border-radius: 12px 12px 12px 4px;
+      padding: 14px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text2);
+      margin-bottom: 12px;
+    }
+    .ai-msg-label {
+      font-size: 11px;
+      color: var(--text3);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .ai-input-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .ai-input {
+      flex: 1;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 14px;
+      padding: 10px 14px;
+      outline: none;
+    }
+    .ai-input:focus { border-color: var(--lavender); }
+    .ai-send {
+      background: linear-gradient(135deg, var(--purple), var(--indigo));
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 18px;
+      width: 44px;
+      cursor: pointer;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--card2);
+      border: 1px solid var(--lavender);
+      border-radius: 12px;
+      padding: 12px 20px;
+      font-size: 14px;
+      color: var(--lavender);
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 200;
+      white-space: nowrap;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Completion banner */
+    .completion-banner {
+      background: linear-gradient(135deg, rgba(124,58,237,0.3), rgba(79,70,229,0.3));
+      border: 1px solid var(--lavender);
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      display: none;
+    }
+    .completion-banner.show { display: block; }
+    .completion-banner h3 {
+      font-family: 'Noto Serif KR', serif;
+      font-size: 18px;
+      color: var(--soft-lavender);
+      margin-bottom: 6px;
+    }
+    .completion-banner p { font-size: 13px; color: var(--text3); }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    /* Responsive */
+    @media (min-width: 480px) {
+      #app { max-width: 480px; margin: 0 auto; }
+    }
+  </style>
+</head>
+<body>
+<div class="stars"></div>
+<div id="app">
+  <div class="header">
+    <div class="logo">미래저널 ✦</div>
+    <div class="logo-sub">AI는 도구다. 나는 방향이다.</div>
+    <div class="streak-badge">
+      <span>🔥</span>
+      <span id="streak-text">0일 연속 작성 중</span>
+    </div>
+  </div>
+
+  <!-- TODAY PAGE -->
+  <div id="page-today" class="page active">
+    <div class="date-label" id="today-date"></div>
+    <div class="greeting" id="greeting">오늘도 나를 향한 여정을 시작해요</div>
+    <div class="greeting-sub">6가지 질문에 답하며 9번째 지능을 훈련하세요</div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+
+    <div class="completion-banner" id="completion-banner">
+      <h3>✦ 오늘의 저널 완성!</h3>
+      <p>매일 쌓이는 기록이 나만의 성장 지도가 됩니다</p>
+    </div>
+
+    <div id="questions-container"></div>
+    <button class="save-btn" onclick="saveToday()">오늘의 저널 저장하기</button>
+  </div>
+
+  <!-- INSIGHT PAGE -->
+  <div id="page-insight" class="page">
+    <br>
+    <div class="section-title">📊 나의 성장 지도</div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num" id="total-days">0</div>
+        <div class="stat-label">총 작성일</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="streak-num">0</div>
+        <div class="stat-label">연속 작성</div>
+      </div>
+    </div>
+
+    <div class="insight-card">
+      <h3>🤖 9번째 지능 지수</h3>
+      <div class="gauge-wrap">
+        <div class="gauge-num" id="ninth-score">--</div>
+        <div class="gauge-label">메타인지 · 서번트 리더십</div>
+        <div class="gauge-bar"><div class="gauge-fill" id="ninth-bar" style="width:0%"></div></div>
+        <div style="font-size:12px;color:var(--text3);" id="ninth-msg">저널을 쌓을수록 지수가 측정됩니다</div>
+      </div>
+    </div>
+
+    <div class="insight-card">
+      <h3>📅 이번 달 감정 달력</h3>
+      <div class="cal-grid" id="cal-grid"></div>
+    </div>
+
+    <div class="insight-card">
+      <h3>🔑 나의 핵심 키워드</h3>
+      <div id="keywords" style="display:flex;flex-wrap:wrap;gap:8px;min-height:40px;">
+        <span style="color:var(--text3);font-size:13px;">저널을 작성하면 키워드가 나타납니다</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HISTORY PAGE -->
+  <div id="page-history" class="page">
+    <br>
+    <div class="section-title">📖 지난 기록</div>
+    <div id="history-list">
+      <div style="text-align:center;color:var(--text3);padding:40px 0;font-size:14px;">
+        아직 저장된 기록이 없어요<br>
+        <span style="font-size:12px;margin-top:8px;display:block">오늘의 저널을 작성해보세요!</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI PAGE -->
+  <div id="page-ai" class="page">
+    <br>
+    <div class="section-title">🤖 AI 동반자 상담</div>
+    <div class="ai-chat" id="ai-chat">
+      <div class="ai-msg-label">
+        <span style="width:20px;height:20px;background:linear-gradient(135deg,var(--purple),var(--indigo));border-radius:50%;display:inline-block"></span>
+        미래저널 AI
+      </div>
+      <div class="ai-msg" id="ai-welcome">
+        안녕하세요 😊 저는 당신의 저널 데이터를 기반으로 대화하는 AI 동반자예요.<br><br>
+        일반 AI는 지금 말한 것만 알지만, 저는 <strong>당신의 누적 기록</strong>을 바탕으로 더 깊은 대화를 나눌 수 있어요.<br><br>
+        오늘 어떤 것이 마음에 걸리나요?
+      </div>
+      <div id="ai-messages"></div>
+    </div>
+    <div class="ai-input-row">
+      <input class="ai-input" id="ai-input" placeholder="AI 동반자에게 말해보세요..." onkeydown="if(event.key==='Enter')sendAI()" />
+      <button class="ai-send" onclick="sendAI()">↑</button>
+    </div>
+    <div style="font-size:11px;color:var(--text3);text-align:center;margin-top:10px">
+      저널을 많이 쌓을수록 더 깊은 대화가 가능해요
+    </div>
+  </div>
+</div>
+
+<!-- Bottom Nav -->
+<nav class="nav">
+  <button class="nav-btn active" onclick="showPage('today',this)">
+    <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    오늘
+  </button>
+  <button class="nav-btn" onclick="showPage('insight',this)">
+    <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+    인사이트
+  </button>
+  <button class="nav-btn" onclick="showPage('history',this)">
+    <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+    기록
+  </button>
+  <button class="nav-btn" onclick="showPage('ai',this)">
+    <svg fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+    AI상담
+  </button>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const QUESTIONS = [
+  { emoji:'🌸', cat:'감사', text:'오늘 감사한 것 3가지를 적어보세요.', placeholder:'오늘 고마웠던 것들을 떠올려보세요...' },
+  { emoji:'🧭', cat:'존재이유', text:'나는 왜 살고 있나요? 왜 지금 이 일을 하고 있나요?', placeholder:'나를 움직이는 힘은 무엇인지 솔직하게 적어보세요...' },
+  { emoji:'⚡', cat:'몰입', text:'오늘 시간 가는 줄 모르고 빠져든 것이 있었나요?', placeholder:'시간이 멈춘 것처럼 느껴진 순간이 있었나요...' },
+  { emoji:'💪', cat:'리더십', text:'오늘 내가 실천한 리더십이 있었나요?', placeholder:'누군가를 위해 한 일, 섬김의 순간을 적어보세요...' },
+  { emoji:'🌟', cat:'영향력', text:'오늘 선한 영향력을 끼친 사람이 있다면 누구인가요?', placeholder:'오늘 본받고 싶었던 사람이나 순간을 적어보세요...' },
+  { emoji:'🔥', cat:'감정', text:'오늘 가장 화가 났던 순간을 적어보세요.', placeholder:'솔직한 감정이 가장 깊은 자기이해의 시작입니다...' },
+];
+
+let todayAnswers = {};
+let mediaRecorder = null;
+let currentRecordingIdx = null;
+
+// Storage helpers
+function load(key) { try { return JSON.parse(localStorage.getItem(key)); } catch { return null; } }
+function save(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
+
+function getTodayKey() {
+  const d = new Date();
+  return `journal_${d.getFullYear()}_${d.getMonth()+1}_${d.getDate()}`;
+}
+
+function getAllJournals() {
+  const all = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.startsWith('journal_')) {
+      const v = load(k);
+      if (v) all.push({ key: k, ...v });
+    }
+  }
+  return all.sort((a,b) => b.key.localeCompare(a.key));
+}
+
+// Init
+function init() {
+  setDate();
+  buildQuestions();
+  loadTodayData();
+  updateProgress();
+  updateStreak();
+}
+
+function setDate() {
+  const d = new Date();
+  const days = ['일','월','화','수','목','금','토'];
+  document.getElementById('today-date').textContent =
+    `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 ${days[d.getDay()]}요일`;
+}
+
+function buildQuestions() {
+  const c = document.getElementById('questions-container');
+  c.innerHTML = '';
+  QUESTIONS.forEach((q, i) => {
+    const div = document.createElement('div');
+    div.className = 'question-card';
+    div.id = `qcard-${i}`;
+    div.innerHTML = `
+      <div class="q-header">
+        <span class="q-emoji">${q.emoji}</span>
+        <div class="q-meta">
+          <div class="q-category">${q.cat}</div>
+          <div class="q-text">${q.text}</div>
+        </div>
+        <div class="q-check" id="check-${i}">
+          <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+      </div>
+      <textarea id="ans-${i}" placeholder="${q.placeholder}" rows="3"
+        oninput="onAnswer(${i})"></textarea>
+      <button class="mic-btn" id="mic-${i}" onclick="toggleRecord(${i})">
+        🎙 음성으로 답하기
+      </button>
+    `;
+    c.appendChild(div);
+  });
+}
+
+function loadTodayData() {
+  const data = load(getTodayKey());
+  if (data && data.answers) {
+    todayAnswers = data.answers;
+    QUESTIONS.forEach((_, i) => {
+      const ta = document.getElementById(`ans-${i}`);
+      if (ta && todayAnswers[i]) {
+        ta.value = todayAnswers[i];
+        markAnswered(i);
+      }
+    });
+  }
+}
+
+function onAnswer(i) {
+  const val = document.getElementById(`ans-${i}`).value.trim();
+  if (val) {
+    todayAnswers[i] = val;
+    markAnswered(i);
+  } else {
+    delete todayAnswers[i];
+    document.getElementById(`check-${i}`).classList.remove('visible');
+    document.getElementById(`qcard-${i}`).classList.remove('answered');
+  }
+  updateProgress();
+}
+
+function markAnswered(i) {
+  document.getElementById(`check-${i}`).classList.add('visible');
+  document.getElementById(`qcard-${i}`).classList.add('answered');
+}
+
+function updateProgress() {
+  const count = Object.keys(todayAnswers).length;
+  const pct = (count / QUESTIONS.length) * 100;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  if (count === QUESTIONS.length) {
+    document.getElementById('completion-banner').classList.add('show');
+  }
+}
+
+function saveToday() {
+  const count = Object.keys(todayAnswers).length;
+  if (count === 0) { showToast('최소 1개 이상 답변을 작성해주세요'); return; }
+  save(getTodayKey(), { answers: todayAnswers, date: new Date().toISOString(), count });
+  updateStreak();
+  showToast(`✦ ${count}개 답변이 저장되었습니다`);
+}
+
+function updateStreak() {
+  const journals = getAllJournals();
+  let streak = 0;
+  const today = new Date();
+  for (let i = 0; i < 365; i++) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const key = `journal_${d.getFullYear()}_${d.getMonth()+1}_${d.getDate()}`;
+    if (load(key)) streak++;
+    else if (i > 0) break;
+  }
+  document.getElementById('streak-text').textContent = `${streak}일 연속 작성 중`;
+  document.getElementById('streak-num').textContent = streak;
+  document.getElementById('total-days').textContent = journals.length;
+  updateNinthScore(journals.length, streak);
+  buildCalendar();
+  buildHistory();
+  buildKeywords();
+}
+
+function updateNinthScore(total, streak) {
+  if (total === 0) return;
+  const score = Math.min(99, Math.round(20 + (total * 2) + (streak * 3)));
+  document.getElementById('ninth-score').textContent = score;
+  document.getElementById('ninth-bar').style.width = score + '%';
+  const msgs = ['시작이 반이에요! 계속 기록해보세요', '꾸준히 훈련 중이에요', '성장이 느껴집니다!', '당신은 분명히 앞으로 나아가고 있어요'];
+  document.getElementById('ninth-msg').textContent = score < 40 ? msgs[0] : score < 60 ? msgs[1] : score < 80 ? msgs[2] : msgs[3];
+}
+
+function buildCalendar() {
+  const grid = document.getElementById('cal-grid');
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  grid.innerHTML = '';
+  ['일','월','화','수','목','금','토'].forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'cal-day';
+    el.style.fontWeight = '600';
+    el.style.color = 'var(--text3)';
+    el.textContent = d;
+    grid.appendChild(el);
+  });
+  for (let i = 0; i < firstDay; i++) {
+    grid.appendChild(document.createElement('div'));
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    const key = `journal_${year}_${month+1}_${d}`;
+    const hasEntry = !!load(key);
+    const isToday = d === today.getDate();
+    const el = document.createElement('div');
+    el.className = 'cal-day' + (hasEntry ? ' has-entry' : '') + (isToday ? ' today' : '');
+    el.textContent = hasEntry ? '✦' : d;
+    if (!hasEntry) el.style.color = isToday ? 'var(--lavender)' : 'var(--text3)';
+    grid.appendChild(el);
+  }
+}
+
+function buildHistory() {
+  const journals = getAllJournals();
+  const el = document.getElementById('history-list');
+  if (journals.length === 0) {
+    el.innerHTML = '<div style="text-align:center;color:var(--text3);padding:40px 0;font-size:14px;">아직 저장된 기록이 없어요<br><span style="font-size:12px;margin-top:8px;display:block">오늘의 저널을 작성해보세요!</span></div>';
+    return;
+  }
+  el.innerHTML = journals.map(j => {
+    const parts = j.key.split('_');
+    const dateStr = `${parts[1]}년 ${parts[2]}월 ${parts[3]}일`;
+    const answers = j.answers || {};
+    const firstQ = Object.keys(answers)[0];
+    const preview = firstQ !== undefined ? answers[firstQ] : '';
+    const q = QUESTIONS[firstQ] || {};
+    return `<div class="history-item">
+      <div class="history-date">📅 ${dateStr} · ${j.count || Object.keys(answers).length}개 답변</div>
+      ${firstQ !== undefined ? `<div class="history-q">${q.emoji||''} ${q.cat||''}</div><div class="history-a history-preview">${preview}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function buildKeywords() {
+  const journals = getAllJournals();
+  if (journals.length === 0) return;
+  const wordCount = {};
+  const stopwords = new Set(['나는','오늘','있었','있었나요','것이','같은','그리고','하지만','그래서','때문에','정말','너무','많이','조금','아주','수','것','등','들','이','가','을','를','에','의','와','과','도','은','는','에서','으로','로','에게','께서','이나','이든','든','라도','라서','라고','더','않','없','있','했','한','하는','할','해서','되어','되었','위해','대한','라는','이라고','에는','만','부터','까지','처럼','보다']);
+  journals.forEach(j => {
+    Object.values(j.answers || {}).forEach(text => {
+      text.split(/[\s,.!?]+/).forEach(w => {
+        const clean = w.replace(/[^\w가-힣]/g,'');
+        if (clean.length >= 2 && !stopwords.has(clean)) {
+          wordCount[clean] = (wordCount[clean]||0)+1;
+        }
+      });
+    });
+  });
+  const sorted = Object.entries(wordCount).sort((a,b)=>b[1]-a[1]).slice(0,15);
+  const kwEl = document.getElementById('keywords');
+  if (sorted.length === 0) return;
+  const maxCount = sorted[0][1];
+  kwEl.innerHTML = sorted.map(([w,c]) => {
+    const size = 11 + Math.round((c/maxCount)*8);
+    const op = 0.5 + (c/maxCount)*0.5;
+    return `<span style="font-size:${size}px;color:var(--lavender);opacity:${op};background:rgba(124,58,237,0.15);padding:4px 10px;border-radius:20px;border:1px solid var(--border)">${w}</span>`;
+  }).join('');
+}
+
+// Voice recording
+async function toggleRecord(i) {
+  const btn = document.getElementById(`mic-${i}`);
+  if (mediaRecorder && mediaRecorder.state === 'recording') {
+    mediaRecorder.stop();
+    btn.classList.remove('recording');
+    btn.textContent = '🎙 음성으로 답하기';
+    return;
+  }
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const chunks = [];
+    mediaRecorder = new MediaRecorder(stream);
+    currentRecordingIdx = i;
+    btn.classList.add('recording');
+    btn.textContent = '⏹ 녹음 중... (클릭하여 완료)';
+    mediaRecorder.ondataavailable = e => chunks.push(e.data);
+    mediaRecorder.onstop = () => {
+      stream.getTracks().forEach(t => t.stop());
+      const blob = new Blob(chunks, { type: 'audio/webm' });
+      transcribeAudio(blob, i);
+    };
+    mediaRecorder.start();
+  } catch {
+    showToast('마이크 접근 권한이 필요해요');
+  }
+}
+
+function transcribeAudio(blob, i) {
+  if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
+    showToast('이 브라우저는 음성 인식을 지원하지 않아요');
+    return;
+  }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const sr = new SR();
+  sr.lang = 'ko-KR';
+  sr.interimResults = false;
+  sr.onresult = e => {
+    const text = e.results[0][0].transcript;
+    const ta = document.getElementById(`ans-${i}`);
+    ta.value = (ta.value ? ta.value + ' ' : '') + text;
+    onAnswer(i);
+  };
+  sr.onerror = () => showToast('음성 인식에 실패했어요. 다시 시도해주세요.');
+  sr.start();
+}
+
+// AI Chat
+const aiResponses = [
+  '저널을 꾸준히 작성하면서 당신 안에 어떤 변화가 느껴지나요? 작은 변화도 소중해요.',
+  '오늘 작성한 감사 항목을 보면, 당신이 소중히 여기는 것들이 보여요. 그것들이 당신의 가치관이에요.',
+  '몰입했던 순간을 기억해보세요. 그 안에 당신의 강점이 숨어 있어요.',
+  '리더십은 거창한 것이 아니에요. 오늘 누군가를 위해 한 작은 행동도 서번트 리더십이에요.',
+  '감정을 솔직하게 기록하는 것 자체가 9번째 지능을 훈련하는 거예요. 잘 하고 있어요.',
+  '당신의 기록이 쌓일수록, 저는 더 깊이 당신을 이해할 수 있게 돼요. 계속해주세요.',
+  '과거의 기록을 돌아보면 분명히 성장한 자신을 발견할 수 있을 거예요.',
+];
+let aiIdx = 0;
+
+function sendAI() {
+  const input = document.getElementById('ai-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+  const chat = document.getElementById('ai-messages');
+  const userEl = document.createElement('div');
+  userEl.style.cssText = 'text-align:right;margin-bottom:10px';
+  userEl.innerHTML = `<span style="background:linear-gradient(135deg,var(--purple),var(--indigo));color:white;padding:10px 14px;border-radius:12px 12px 4px 12px;font-size:14px;display:inline-block;max-width:80%;text-align:left">${msg}</span>`;
+  chat.appendChild(userEl);
+  input.value = '';
+  setTimeout(() => {
+    const journals = getAllJournals();
+    let response = aiResponses[aiIdx % aiResponses.length];
+    aiIdx++;
+    if (journals.length === 0) response = '아직 저널이 없네요. 오늘 탭에서 첫 번째 기록을 남겨보세요! 기록이 쌓일수록 더 깊은 대화를 나눌 수 있어요.';
+    const aiEl = document.createElement('div');
+    aiEl.innerHTML = `<div class="ai-msg-label"><span style="width:20px;height:20px;background:linear-gradient(135deg,var(--purple),var(--indigo));border-radius:50%;display:inline-block"></span>미래저널 AI</div><div class="ai-msg">${response}</div>`;
+    chat.appendChild(aiEl);
+    chat.scrollTop = chat.scrollHeight;
+  }, 800);
+}
+
+// Navigation
+function showPage(name, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  btn.classList.add('active');
+  if (name === 'insight') { buildCalendar(); buildHistory(); buildKeywords(); updateStreak(); }
+  if (name === 'history') buildHistory();
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+init();
+</script>
+</body>
+</html>

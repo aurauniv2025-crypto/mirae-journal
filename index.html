@@ -617,8 +617,9 @@ const firebaseConfig = {
   authDomain: "mirae-journal.firebaseapp.com",
   projectId: "mirae-journal",
 };
+  if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+console.log("Firebase initialized:", firebase.apps.length);
 
-if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const loginBtn = document.getElementById("loginBtn");
 const logoutBtn = document.getElementById("logoutBtn");

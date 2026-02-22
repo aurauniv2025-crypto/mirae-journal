@@ -475,6 +475,11 @@
   </style>
 </head>
 <body>
+  <div id="authBar" style="display:flex;gap:8px;align-items:center;padding:12px 16px;">
+  <button id="loginBtn">Google로 로그인</button>
+  <button id="logoutBtn" style="display:none;">로그아웃</button>
+  <span id="userLabel" style="opacity:.9;"></span>
+</div>
 <div class="stars"></div>
 <div id="app">
   <div class="header">
@@ -604,7 +609,77 @@
 
 <div class="toast" id="toast"></div>
 
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
 <script>
+  const firebaseConfig = {
+  apiKey: "...",
+  authDomain: "...",
+  projectId: "...",
+};
+
+if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+window.addEventListener("DOMContentLoaded", () => {
+  const loginBtn = document.getElementById("loginBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
+  const userLabel = document.getElementById("userLabel");
+
+  loginBtn.addEventListener("click", async () => {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    await auth.signInWithPopup(provider);
+  });
+
+  logoutBtn.addEventListener("click", async () => {
+    await auth.signOut();
+  });
+
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      loginBtn.style.display = "none";
+      logoutBtn.style.display = "inline-block";
+      userLabel.textContent = `${user.displayName || "User"} (${user.email || ""})`;
+    } else {
+      loginBtn.style.display = "inline-block";
+      logoutBtn.style.display = "none";
+      userLabel.textContent = "";
+    }
+  });
+});
+  const firebaseConfig = {
+  apiKey: "...",
+  authDomain: "...",
+  projectId: "...",
+};
+
+if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+const loginBtn = document.getElementById("loginBtn");
+const logoutBtn = document.getElementById("logoutBtn");
+const userLabel = document.getElementById("userLabel");
+
+loginBtn.addEventListener("click", async () => {
+  const provider = new firebase.auth.GoogleAuthProvider();
+  await auth.signInWithPopup(provider);
+});
+
+logoutBtn.addEventListener("click", async () => {
+  await auth.signOut();
+});
+
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    loginBtn.style.display = "none";
+    logoutBtn.style.display = "inline-block";
+    userLabel.textContent = `${user.displayName || "User"} (${user.email || ""})`;
+  } else {
+    loginBtn.style.display = "inline-block";
+    logoutBtn.style.display = "none";
+    userLabel.textContent = "";
+  }
+});
 const QUESTIONS = [
   { emoji:'🌸', cat:'감사', text:'오늘 감사한 것 3가지를 적어보세요.', placeholder:'오늘 고마웠던 것들을 떠올려보세요...' },
   { emoji:'🧭', cat:'존재이유', text:'나는 왜 살고 있나요? 왜 지금 이 일을 하고 있나요?', placeholder:'나를 움직이는 힘은 무엇인지 솔직하게 적어보세요...' },
